@@ -17,7 +17,7 @@
 // You can also find solutions to all exercises in the `solutions` git branch.
 fn greeting() -> &'static str {
     // TODO: fix me 👇
-    "I'm ready to __!"
+    "I'm ready to learn Rust!"
 }
 
 // Your solutions will be automatically verified by a set of tests.
@@ -36,6 +36,7 @@ fn greeting() -> &'static str {
 // They are there to help you validate your solutions. You should only change the code that's being
 // tested, not the tests themselves.
 #[cfg(test)]
+// 仅在测试时编译下面的代码
 mod tests {
     use crate::greeting;
 
