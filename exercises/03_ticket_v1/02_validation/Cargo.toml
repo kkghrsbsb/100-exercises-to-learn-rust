@@ -5,6 +5,7 @@ edition = "2021"
 
 [dev-dependencies]
 common = { path = "../../../helpers/common" }
+# 我的依赖里有一个 crate 名叫 common，它的路径是 helpers/common。
 
 [lints.rust]
 # We silence dead code warnings for the time being in order to reduce
