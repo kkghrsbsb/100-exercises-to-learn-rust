@@ -10,7 +10,7 @@ struct Order {
 }
 
 impl Order {
-    fn is_available(self) -> bool {
+    fn isunit_available(&self) -> bool {
         if self.quantity > 0 {
             true
         } else {
@@ -29,7 +29,7 @@ mod tests {
             price: 100,
             quantity: 10,
         };
-        assert!(order.is_available());
+        assert!(order.isunit_available());
     }
 
     #[test]
@@ -38,6 +38,6 @@ mod tests {
             price: 100,
             quantity: 0,
         };
-        assert!(!order.is_available());
+        assert!(!order.isunit_available());
     }
 }
