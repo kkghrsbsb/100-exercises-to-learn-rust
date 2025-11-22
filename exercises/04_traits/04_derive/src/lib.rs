@@ -14,6 +14,13 @@ struct Ticket {
     description: String,
     status: String,
 }
+// trait PartialEq派生后, cargo expand 查看
+// impl PartialEq for Ticket {
+//     fn eq(&self, other: &Self) -> bool {
+//         self.title == other.title && self.description == other.description
+//             && self.status == other.status
+//     }
+// }
 
 #[cfg(test)]
 mod tests {
