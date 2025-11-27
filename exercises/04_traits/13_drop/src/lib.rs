@@ -2,6 +2,30 @@
 //  unless a certain operation has been performed on it.
 //  You can see the expected API in the tests below.
 
+// 答案的defused是扩散的意思，让我们知道爆炸有没有扩散(bool),真的自己写不明白
+pub struct DropBomb {
+    defused: bool,
+}
+
+impl DropBomb {
+    pub fn new() -> Self {
+        DropBomb { defused: false }
+    }
+
+    pub fn defuse(&mut self) {
+        self.defused = true;
+    }
+}
+
+// Drop 可以随便实现，不需要真的管理资源 (对类型实现Drop -> 编译器认为你需要特别处理你的生命周期，且此类型不能显式是Copy了)
+impl Drop for DropBomb {
+    fn drop(&mut self) {
+        if !self.defused {
+            panic!("Boom!");
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
