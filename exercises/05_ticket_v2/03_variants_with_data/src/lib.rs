@@ -1,6 +1,8 @@
 // TODO: Implement `Ticket::assigned_to`.
 //  Return the name of the person assigned to the ticket, if the ticket is in progress.
 //  Panic otherwise.
+//  如果工单正在处理中，则返回分配给该工单的人员姓名。
+//  否则抛出 panic。
 
 #[derive(Debug, PartialEq)]
 struct Ticket {
@@ -38,7 +40,13 @@ impl Ticket {
         }
     }
     pub fn assigned_to(&self) -> &str {
-        todo!()
+        match &self.status {
+            // 字段访问产生move,需要借用
+            Status::InProgress { assigned_to: name } => name,
+            Status::ToDo | Status::Done => {
+                panic!("Only `In-Progress` tickets can be assigned to someone")
+            }
+        }
     }
 }
 
