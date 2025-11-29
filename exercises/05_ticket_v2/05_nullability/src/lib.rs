@@ -36,7 +36,12 @@ impl Ticket {
         }
     }
     pub fn assigned_to(&self) -> Option<&String> {
-        todo!()
+        match &self.status {
+            // 因为 Option 定义在标准库，所以不需要Option::这样写
+            Status::ToDo => None,
+            Status::InProgress { assigned_to } => Some(assigned_to),
+            Status::Done => None,
+        }
     }
 }
 
