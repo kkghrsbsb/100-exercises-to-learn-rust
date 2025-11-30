@@ -23,6 +23,8 @@ pub enum TicketNewError {
     DescriptionCannotBeEmpty,
     #[error("Description cannot be longer than 500 bytes")]
     DescriptionTooLong,
+    #[error("{0}")] // 打印0个字段， 等价于 #[error("{}", self.0)]
+    InvalidStatus(#[from] status::ParseStatusError),
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -48,6 +50,12 @@ impl Ticket {
         }
 
         // TODO: Parse the status string into a `Status` enum.
+        let status = Status::try_from(status)?;
+        // Status::try_from("invalid")
+        //     ↓ returns Err(ParseStatusError) ——可是你的函数的错误类型是TicketNewError
+        // ? 运算符：需要把 ParseStatusError 转成 TicketNewError
+        //     ↓ 使用 From<ParseStatusError> for TicketNewError 自动实现
+        // TicketNewError::InvalidStatus(ParseStatusError)
 
         Ok(Ticket {
             title,
@@ -72,5 +80,11 @@ mod tests {
             "`invalid` is not a valid status. Use one of: ToDo, InProgress, Done"
         );
         assert!(err.source().is_some());
+    }
+
+    #[test]
+    fn debug_error() {
+        let err = Ticket::new("A".into(), "B".into(), "xxx".into()).unwrap_err();
+        println!("{:?}", err);
     }
 }
