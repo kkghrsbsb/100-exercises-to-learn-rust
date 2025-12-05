@@ -34,6 +34,11 @@ impl TicketStore {
     pub fn add_ticket(&mut self, ticket: Ticket) {
         self.tickets.push(ticket);
     }
+
+    pub fn iter(&self) -> std::slice::Iter<Ticket> {
+        self.tickets.iter()
+        // 我 TicketStore 不想自己写迭代，我把内部 Vec<Ticket> 的迭代器借给你用。
+    }
 }
 
 #[cfg(test)]

@@ -4,7 +4,6 @@
 // TODO：为 `TicketDescription` 类型实现 `TryFrom<String>` 和 `TryFrom<&str>` 方法，
 //  强制要求描述不为空且长度不超过 500 字节。
 //  同时实现使测试通过所需的特性。
-use crate::Status;
 use thiserror;
 
 #[derive(Debug, PartialEq, Clone)]

@@ -8,9 +8,23 @@ use ticket_fields::{TicketDescription, TicketTitle};
 //   You want to *delegate* the iteration to the `Vec<Ticket>` field in `TicketStore`.
 //   Look at the standard library documentation for `Vec` to find the right type
 //   to return from `into_iter`.
+// TODO：让我们开始绘制票务存储的草图！
+//   第一个任务：在 `TicketStore` 上实现 `IntoIterator`，以便可以使用 `for` 循环遍历它包含的所有票务。
+//
+// 提示：在这种情况下，您不需要实现 `Iterator` trait。
+// 您需要将迭代操作*委托*给 `TicketStore` 中的 `Vec<Ticket>` 字段。
+// 查看标准库中 `Vec` 的文档，找到 `into_iter` 返回的正确类型。
 #[derive(Clone)]
 pub struct TicketStore {
     tickets: Vec<Ticket>,
+}
+
+impl IntoIterator for TicketStore {
+    type Item = Ticket;
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+    fn into_iter(self) -> Self::IntoIter {
+        self.tickets.into_iter()
+    }
 }
 
 #[derive(Clone, Debug, PartialEq)]
