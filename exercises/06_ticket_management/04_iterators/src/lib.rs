@@ -21,7 +21,7 @@ pub struct TicketStore {
 
 impl IntoIterator for TicketStore {
     type Item = Ticket;
-    type IntoIter = std::vec::IntoIter<Self::Item>;
+    type IntoIter = std::vec::IntoIter<Ticket>;
     fn into_iter(self) -> Self::IntoIter {
         self.tickets.into_iter()
     }
