@@ -5,12 +5,20 @@
 //
 // You also need to add a `get` method that takes as input a `TicketId`
 // and returns an `Option<&Ticket>`.
+// TODO：更新 `add_ticket` 的签名：它应该接受一个 `TicketDraft` 作为输入
+//  并返回一个 `TicketId` 作为输出。
+//  每个工单都应该有一个唯一的 ID，由 `TicketStore` 生成。
+//  如有需要，可以随意修改 `TicketStore` 的字段。
+//
+// 您还需要添加一个 `get` 方法，该方法接受一个 `TicketId` 作为输入
+// 并返回一个 `Option<&Ticket>`。
 
 use ticket_fields::{TicketDescription, TicketTitle};
 
 #[derive(Clone)]
 pub struct TicketStore {
     tickets: Vec<Ticket>,
+    counter: u64,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -41,11 +49,27 @@ impl TicketStore {
     pub fn new() -> Self {
         Self {
             tickets: Vec::new(),
+            counter: 0, // 一定要想到的是counter是类型字段，方法都要用到才能变
         }
     }
 
-    pub fn add_ticket(&mut self, ticket: Ticket) {
+    // add_ticket的首要目的是加Ticket类型的元素进TicketStore中Vec, 这之前先要提供累加的id, 再最后按要求返回TickerId(id)
+    pub fn add_ticket(&mut self, draft: TicketDraft) -> TicketId {
+        let id = self.counter;
+        self.counter += 1;
+        let ticket = Ticket {
+            id: TicketId(id),
+            title: draft.title,
+            description: draft.description,
+            status: Status::ToDo,
+        };
         self.tickets.push(ticket);
+        TicketId(id)
+    }
+
+    // 想到迭代器上方法find()它查找谓词返回Option
+    pub fn get(&self, id: TicketId) -> Option<&Ticket> {
+        self.tickets.iter().find(|ticket| ticket.id == id)
     }
 }
 
