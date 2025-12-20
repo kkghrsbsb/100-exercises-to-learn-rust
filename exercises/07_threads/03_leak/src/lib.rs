@@ -5,9 +5,7 @@
 
 use std::thread;
 
-pub fn sum(v: Vec<i32>) -> i32 {
-    todo!()
-}
+pub fn sum(v: Vec<i32>) -> i32 {}
 
 #[cfg(test)]
 mod tests {
